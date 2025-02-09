@@ -24,6 +24,8 @@ jobs:
         cache: 'npm'
     - name: Install Dependencies
       run: npm ci
+    - name: Replace the Back End Endpoint
+      run: echo "export const settings = {host:'http://localhost:3030'}" > src/config.js
     - name: Start Front End On Localhost
       run: npm run start-fe &
     - name: Start Back End On Localhost
