@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_test:
 
     runs-on: ubuntu-latest
 
@@ -34,3 +34,25 @@ jobs:
       run: npx playwright install
     - name: Run UI Tests
       run: npm run test-ui
+  
+  deploy_backend:
+    needs: build_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JorgeLNJunior/render-deploy@v1.4.4
+        with:
+          service_id: ${{ secrets.MY_RENDER_SERVICE_ID_BE }}
+          api_key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait_deploy: true 
+
+  deploy_frontend:
+    needs: build_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JorgeLNJunior/render-deploy@v1.4.4
+        with:
+          service_id: ${{ secrets.MY_RENDER_SERVICE_ID_FE }}
+          api_key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait_deploy: true 
