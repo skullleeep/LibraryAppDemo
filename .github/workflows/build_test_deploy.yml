@@ -28,5 +28,7 @@ jobs:
       run: npm run start-fe &
     - name: Start Back End On Localhost
       run: npm run start-be &
+    - name: Install Browsers
+      run: npx playwright install
     - name: Run UI Tests
       run: npm run test-ui
